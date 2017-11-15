@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { BrowserRouter, Link } from "react-router-dom";
 import styled from "styled-components";
 import Main from "./Main.jsx";
 import logo from "./logo.png";
@@ -22,6 +22,7 @@ const StyledLink = styled(Link)`
 class App extends Component {
     render() {
         return (
+          <BrowserRouter>
             <div className="App">
                 <header className="App-header">
                     <img src={logo} className="App-logo" alt="logo" />
@@ -32,6 +33,7 @@ class App extends Component {
                 </header>
                 <Main />
             </div>
+          </BrowserRouter>
         );
     }
 }
