@@ -27,6 +27,7 @@ class App extends Component {
                     <img src={logo} className="App-logo" alt="logo" />
                     <Navbar>
                       <StyledLink to='/'>Home</StyledLink>
+                      <StyledLink to='/events'>Events</StyledLink>
                     </Navbar>
                 </header>
                 <Main />
