@@ -37,7 +37,7 @@ const events = [
   {
     "title": "Good Form 009: House\\Techno\\DnB",
     "description": "Imperial Soundsystem DJs all night long",
-    "date": "19/11/2017",
+    "date": "17/11/2017",
     "image": "https://scontent-lht6-1.xx.fbcdn.net/v/t31.0-8/23213334_10155148649867362_5281441382595542657_o.jpg?oh=2da0e66fdb69d58d38e178f0628f8334&oe=5A96F3CF"
   },
   {
