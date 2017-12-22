@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import Event from "./Event";
+import Event from "../../components/Event/Event.jsx"
 
 const Header = styled.h2``;
 

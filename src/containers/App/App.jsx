@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { BrowserRouter, Link } from "react-router-dom";
 import styled from "styled-components";
-import Main from "./Main.jsx";
-import logo from "./logo.png";
+import Main from "../Main/Main.jsx";
+import logo from "../../logo.png";
 import "./App.css";
 
 const Navbar = styled.div`

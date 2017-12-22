@@ -1,9 +1,9 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import styled from "styled-components";
-import Events from './Events.jsx';
-import Home from "./Home.jsx";
-import Radio from "./Radio.jsx";
+import Events from '../Events/Events.jsx';
+import Home from "../Home/Home.jsx";
+import Radio from "../Radio/Radio.jsx";
 
 const MainContent = styled.div`
   background-color: #efefef;
