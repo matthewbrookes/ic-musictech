@@ -6,8 +6,9 @@ import Home from "./Home.jsx";
 
 const MainContent = styled.div`
   background-color: #efefef;
-  margin: 0 15%;
+  margin: 0 15% 2.5% 15%;
   border-radius: 4px;
+  height: 100%;
 `;
 
 const Main = () => (
