@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import styled from "styled-components";
 import Events from './Events.jsx';
 import Home from "./Home.jsx";
+import Radio from "./Radio.jsx";
 
 const MainContent = styled.div`
   background-color: #efefef;
@@ -17,6 +18,7 @@ const Main = () => (
     <Switch>
       <Route exact path='/' component={Home}/>
       <Route exact path='/events' component={Events}/>
+      <Route exact path='/radio' component={Radio}/>
     </Switch>
   </MainContent>
 );

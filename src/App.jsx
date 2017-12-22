@@ -29,6 +29,7 @@ class App extends Component {
                     <Navbar>
                       <StyledLink to='/'>Home</StyledLink>
                       <StyledLink to='/events'>Events</StyledLink>
+                      <StyledLink to='/radio'>Musictech on IC Radio</StyledLink>
                     </Navbar>
                 </header>
                 <Main />
