@@ -1,3 +1,5 @@
+Build: [![Build Status](https://travis-ci.org/mbrookes1304/ic-musictech.svg?branch=master)](https://travis-ci.org/mbrookes1304/ic-musictech)
+
 ## Running/Developing locally
 This project contains a `Dockerfile` and `docker-compose.yml` that supports
 hot-reloading of modified source files.
