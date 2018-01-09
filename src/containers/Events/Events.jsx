@@ -21,8 +21,8 @@ const events = [
   },
   {
     "title": "Beit Me I'm Famous",
-    "description": "For the very first time in the history of FiveSixEight, Metric and the Union Bar, Beit Me I’m Famous will bring to you a party inspired from the best nights in Ibiza.\
-                    Cocktails all night long, dancers from 23:00 to midnight, courtesy of Culinary and Pole & Aerial societies.",
+    "description": "For the very first time in the history of FiveSixEight, Metric and the Union Bar, Beit Me I’m Famous will bring to you a party inspired from the best nights in Ibiza." +
+                    "Cocktails all night long, dancers from 23:00 to midnight, courtesy of Culinary and Pole & Aerial societies.",
     "date": "13/10/2017",
     "image": "https://scontent-lhr3-1.xx.fbcdn.net/v/t1.0-9/22046529_679066958955983_1000145979094858459_n.jpg?oh=108989aff4b30b1fbd9d5e878c8caeea&oe=5AA25D9C"
   }
