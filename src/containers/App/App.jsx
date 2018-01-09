@@ -19,20 +19,43 @@ const StyledLink = styled(Link)`
   color: black;
 `;
 
+const Wrapper = styled.div`
+  display: flex;
+  height: 100%;
+`;
+
+const LeftSidebar = styled.div`
+  width: 25%;
+  background-image: url("/left-sidebar.jpg");
+  background-size: cover;
+`;
+
+const RightSidebar = styled.div`
+  width: 25%;
+  background-image: url("/right-sidebar.jpg");
+  background-size: cover;
+`;
+
 class App extends Component {
     render() {
         return (
           <BrowserRouter>
             <div className="App">
-                <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <Navbar>
-                      <StyledLink to='/'>Home</StyledLink>
-                      <StyledLink to='/events'>Events</StyledLink>
-                      <StyledLink to='/radio'>Musictech on IC Radio</StyledLink>
-                    </Navbar>
-                </header>
-                <Main />
+                <Wrapper>
+                  <LeftSidebar />
+                  <div>
+                    <header className="App-header">
+                        <img src={logo} className="App-logo" alt="logo" />
+                        <Navbar>
+                          <StyledLink to='/'>Home</StyledLink>
+                          <StyledLink to='/events'>Events</StyledLink>
+                          <StyledLink to='/radio'>Musictech on IC Radio</StyledLink>
+                        </Navbar>
+                    </header>
+                    <Main />
+                  </div>
+                  <RightSidebar />
+                </Wrapper>
             </div>
           </BrowserRouter>
         );

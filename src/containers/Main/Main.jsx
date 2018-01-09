@@ -7,10 +7,9 @@ import Radio from "../Radio/Radio.jsx";
 
 const MainContent = styled.div`
   background-color: #efefef;
-  margin: 10px 15% 2.5% 15%;
+  margin: 10px 0 2.5% 0;
   padding-top: 10px;
   border-radius: 4px;
-  height: 100%;
 `;
 
 const Main = () => (
