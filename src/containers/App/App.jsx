@@ -22,18 +22,37 @@ const StyledLink = styled(Link)`
 const Wrapper = styled.div`
   display: flex;
   height: 100%;
+  width:100%;
+  position:relative;
 `;
 
 const LeftSidebar = styled.div`
-  width: 25%;
-  background-image: url("/left-sidebar.jpg");
-  background-size: cover;
+  height: 100%;
+  width: 15%;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  position: fixed;
 `;
 
 const RightSidebar = styled.div`
-  width: 25%;
-  background-image: url("/right-sidebar.jpg");
-  background-size: cover;
+  height: 100%;
+  width: 15%;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  position: fixed;
+`;
+
+const Center = styled.div`
+  height: 100%;
+  margin: 0 15%;
+`;
+
+const Img = styled.img`
+  max-width: 100%;
+  width: 100%;
+  height: 100%;
 `;
 
 class App extends Component {
@@ -42,8 +61,10 @@ class App extends Component {
           <BrowserRouter>
             <div className="App">
                 <Wrapper>
-                  <LeftSidebar />
-                  <div>
+                  <LeftSidebar>
+                    <Img src="/left-sidebar.jpg" />
+                  </LeftSidebar>
+                  <Center>
                     <header className="App-header">
                         <img src={logo} className="App-logo" alt="logo" />
                         <Navbar>
@@ -53,8 +74,11 @@ class App extends Component {
                         </Navbar>
                     </header>
                     <Main />
-                  </div>
-                  <RightSidebar />
+                  </Center>
+                  <RightSidebar>
+                    <Img src="/right-sidebar.jpg" />
+                  </RightSidebar>
+
                 </Wrapper>
             </div>
           </BrowserRouter>
