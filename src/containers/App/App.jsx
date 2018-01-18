@@ -7,6 +7,7 @@ import "./App.css";
 
 const Navbar = styled.div`
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
   align-items: center;
   background-color: #efefef;
@@ -22,7 +23,7 @@ const StyledLink = styled(Link)`
 const Wrapper = styled.div`
   display: flex;
   height: 100%;
-  width:100%;
+  width: 100%;
   position:relative;
 `;
 
@@ -46,11 +47,12 @@ const RightSidebar = styled.div`
 
 const Center = styled.div`
   height: 100%;
+  width: 70%;
   margin: 0 15%;
 `;
 
 const Img = styled.img`
-  max-width: 100%;
+  max-width: 300px;
   width: 100%;
   height: 100%;
 `;
@@ -66,7 +68,7 @@ class App extends Component {
                   </LeftSidebar>
                   <Center>
                     <header className="App-header">
-                        <img src={logo} className="App-logo" alt="logo" />
+                        <Img src={logo} alt="Logo" />
                         <Navbar>
                           <StyledLink to='/'>Home</StyledLink>
                           <StyledLink to='/events'>Events</StyledLink>

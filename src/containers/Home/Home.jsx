@@ -9,13 +9,15 @@ const Img = styled.img`
 `;
 
 const MainImgWrapper = styled.div`
-  width: 400px;
+  max-width: 400px;
+  width: 100%;
   display: block;
   margin: 0 auto;
 `;
 
 const SecondaryImgWrapper = styled.div`
-  width: 600px;
+  max-width: 600px;
+  width: 100%;
   display: block;
   margin: 0 auto;
 `;
