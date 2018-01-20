@@ -7,3 +7,8 @@ services:
     volumes:
       - "./src:/musictech/src"
       - "./public:/musictech/public"
+  database:
+    image: dwmkerr/dynamodb
+    ports:
+      - "8000:8000"
+    command: ["-sharedDb"]

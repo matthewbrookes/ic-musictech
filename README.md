@@ -1,10 +1,18 @@
-Build: [![Build Status](https://travis-ci.org/mbrookes1304/ic-musictech.svg?branch=master)](https://travis-ci.org/mbrookes1304/ic-musictech)
+[![Build Status](https://travis-ci.org/mbrookes1304/ic-musictech.svg?branch=master)](https://travis-ci.org/mbrookes1304/ic-musictech)
 
 ## Running/Developing locally
 This project contains a `Dockerfile` and `docker-compose.yml` that supports
 hot-reloading of modified source files.
 
 To use it run `docker-compose up --build`
+
+This will also create an instance of DynamoDB which needs to be initialised.
+
+## Initialising the Database
+This website uses an instance of DynamoDB running in `eu-west-1`.
+To initialise the production DB run `NODE_ENV=production node create-database.js`.
+
+To initialise the local DB for development run `NODE_ENV=development node create-database.js`.
 
 # Create React App README
 
