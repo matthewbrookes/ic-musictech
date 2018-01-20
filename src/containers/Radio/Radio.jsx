@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import Event from "../../components/Event/Event.jsx"
+import Event from "../../components/Event/Event.jsx";
 
 const Intro = styled.p`
 `;
@@ -37,9 +37,9 @@ const Radio = () => (
   <div>
     <Intro>
       Musictech host their own radio sessions and several of our Musictech DJs host their own radio shows on <a href="http://www.icradio.com/">IC Radio</a>.
-      Listen to some of Musictech's past sessions <a href="http://www.icradio.com/shows/957/">here</a> and check out when to hear our DJs playing live below.
+      Listen to some of Musictech&apos;s past sessions <a href="http://www.icradio.com/shows/957/">here</a> and check out when to hear our DJs playing live below.
     </Intro>
-    {shows.map((show) => <Event event={show} />)}
+    {shows.map((show) => <Event event={show} key={show.title} />)}
   </div>
 );
 

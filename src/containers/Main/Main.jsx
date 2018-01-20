@@ -1,7 +1,7 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import styled from "styled-components";
-import Events from '../Events/Events.jsx';
+import Events from "../Events/Events.jsx";
 import Home from "../Home/Home.jsx";
 import Radio from "../Radio/Radio.jsx";
 

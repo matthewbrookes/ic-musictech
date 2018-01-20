@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import Event from "../../components/Event/Event.jsx"
+import Event from "../../components/Event/Event.jsx";
 
 const Header = styled.h2``;
 
@@ -32,7 +32,7 @@ const events = [
 const Events = () => (
   <div>
     <Header>Our upcoming and recent events</Header>
-    {events.map((event) => <Event event={event} />)}
+    {events.map((event) => <Event event={event} key={event.title}/>)}
   </div>
 );
 
