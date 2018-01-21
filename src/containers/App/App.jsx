@@ -58,34 +58,34 @@ const Img = styled.img`
 `;
 
 class App extends Component {
-    render() {
-        return (
-          <BrowserRouter>
-            <div className="App">
-                <Wrapper>
-                  <LeftSidebar>
-                    <Img src="/left-sidebar.jpg" />
-                  </LeftSidebar>
-                  <Center>
-                    <header className="App-header">
-                        <Img src={logo} alt="Logo" />
-                        <Navbar>
-                          <StyledLink to='/'>Home</StyledLink>
-                          <StyledLink to='/events'>Events</StyledLink>
-                          <StyledLink to='/radio'>Musictech on IC Radio</StyledLink>
-                        </Navbar>
-                    </header>
-                    <Main />
-                  </Center>
-                  <RightSidebar>
-                    <Img src="/right-sidebar.jpg" />
-                  </RightSidebar>
+  render() {
+    return (
+      <BrowserRouter>
+        <div className="App">
+          <Wrapper>
+            <LeftSidebar>
+              <Img src="/left-sidebar.jpg" />
+            </LeftSidebar>
+            <Center>
+              <header className="App-header">
+                <Img src={logo} alt="Logo" />
+                <Navbar>
+                  <StyledLink to='/'>Home</StyledLink>
+                  <StyledLink to='/events'>Events</StyledLink>
+                  <StyledLink to='/radio'>Musictech on IC Radio</StyledLink>
+                </Navbar>
+              </header>
+              <Main />
+            </Center>
+            <RightSidebar>
+              <Img src="/right-sidebar.jpg" />
+            </RightSidebar>
 
-                </Wrapper>
-            </div>
-          </BrowserRouter>
-        );
-    }
+          </Wrapper>
+        </div>
+      </BrowserRouter>
+    );
+  }
 }
 
 export default App;

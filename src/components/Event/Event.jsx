@@ -1,5 +1,5 @@
 import React from "react";
-import MediaQuery from 'react-responsive';
+import MediaQuery from "react-responsive";
 import styled from "styled-components";
 
 const EventWrapper = styled.div`
@@ -38,27 +38,27 @@ const Img = styled.img`
 
 const Event = (event) => {
   return (
-  <div>
-  <EventSeparator />
-  <EventWrapper>
-    <MediaQuery query="(min-device-width: 1224px)">
-      <Img src={event.event.image} />
-      <DescriptionWrapper>
-        <EventTitle>{event.event.title}</EventTitle>
-        <EventDate>{event.event.date}</EventDate>
-        <p>{event.event.description}</p>
-      </DescriptionWrapper>
-    </MediaQuery>
-    <MediaQuery query="(max-device-width: 1224px)">
-      <DescriptionWrapper>
-        {event.event.image && <Img src={event.event.image} />}
-        <EventTitle>{event.event.title}</EventTitle>
-        <EventDate>{event.event.date}</EventDate>
-        <p>{event.event.description}</p>
-      </DescriptionWrapper>
-    </MediaQuery>
-  </EventWrapper>
-  </div>
-)}
+    <div>
+      <EventSeparator />
+      <EventWrapper>
+        <MediaQuery query="(min-device-width: 1224px)">
+          <Img src={event.event.image} />
+          <DescriptionWrapper>
+            <EventTitle>{event.event.title}</EventTitle>
+            <EventDate>{event.event.date}</EventDate>
+            <p>{event.event.description}</p>
+          </DescriptionWrapper>
+        </MediaQuery>
+        <MediaQuery query="(max-device-width: 1224px)">
+          <DescriptionWrapper>
+            {event.event.image && <Img src={event.event.image} />}
+            <EventTitle>{event.event.title}</EventTitle>
+            <EventDate>{event.event.date}</EventDate>
+            <p>{event.event.description}</p>
+          </DescriptionWrapper>
+        </MediaQuery>
+      </EventWrapper>
+    </div>
+  );};
 
 export default Event;
