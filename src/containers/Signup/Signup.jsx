@@ -55,6 +55,8 @@ const SlotWrapper = styled.div`
   align-items: flex-start;
 `;
 
+const Error = styled.div``;
+
 class Signup extends React.Component {
 
   constructor() {
@@ -141,7 +143,43 @@ class Signup extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log(this.state);
+    const dynamodb = new AWS.DynamoDB();
+    let component = this;
+    var params = {
+      Item: {
+        "signup-id": {
+          S: `${this.state.date}:${this.state.name}`
+        },
+        "name": {
+          S: this.state.name,
+        },
+        "session-date": {
+          S: this.state.date,
+        },
+        "genre": {
+          S: this.state.genre,
+        },
+        "partner": {
+          S: this.state.partner || " ",
+        },
+        "slot": {
+          S: this.slots[this.state.slot],
+        }
+      },
+      ReturnConsumedCapacity: "TOTAL",
+      TableName: "musictech-signups"
+    };
+    dynamodb.putItem(params, function(err) {
+      if (err) {
+        component.setState({
+          error: "Unable to sign up currently",
+        });
+      } else {
+        component.setState({
+          error: "Successfully signed up",
+        });
+      }
+    });
   }
 
   render() {
@@ -182,6 +220,7 @@ class Signup extends React.Component {
               </LeftAlignWrapper>
             </SlotWrapper>
             <button>Signup</button>
+            <Error>{this.state.error}</Error>
           </form>
         </FormWrapper>
       </Wrapper>

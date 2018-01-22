@@ -37,7 +37,7 @@ var tables = [
       { AttributeName: "signup-id", KeyType: "HASH"}
     ],
     AttributeDefinitions: [
-      { AttributeName: "signup-id", AttributeType: "N" }
+      { AttributeName: "signup-id", AttributeType: "S" }
     ],
     ProvisionedThroughput: {
       ReadCapacityUnits: 1,
