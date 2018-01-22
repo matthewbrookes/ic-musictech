@@ -185,7 +185,7 @@ class Signup extends React.Component {
   render() {
     return (
       <Wrapper>
-        <p>Sign here</p>
+        <p>Join us on Monday from 7-10 for DJ sessions and on Tuesday from 7-10 for Production sessions. Sign up for the next DJ session below.</p>
         <Separator />
         <SessionInfo date={this.state.date} location={this.state.location} />
         <FormWrapper>
