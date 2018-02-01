@@ -1,77 +1,44 @@
-const AWS = require('aws-sdk');
+const mysql      = require('mysql');
+const connection = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'root',
+  password : 'password',
+  database : 'musictech'
+});
 
-if (process.env.NODE_ENV == "production") {
-  // Create tables in AWS
-  AWS.config.update({
-    region: "eu-west-1"
-  });
-} else {
-  // Create tables in local development version
-  AWS.config.update({
-    region: "us-west-2",
-    endpoint: "http://localhost:8000"
-  });
-}
-
-const dynamodb = new AWS.DynamoDB();
-const docClient = new AWS.DynamoDB.DocumentClient();
-
-var tables = [
-  {
-    TableName : "musictech-sessions",
-    KeySchema: [
-      { AttributeName: "name", KeyType: "HASH"},
-      { AttributeName: "session-date", KeyType: "RANGE"}
-    ],
-    AttributeDefinitions: [
-      { AttributeName: "name", AttributeType: "S" },
-      { AttributeName: "session-date", AttributeType: "S" }
-    ],
-    ProvisionedThroughput: {
-      ReadCapacityUnits: 1,
-      WriteCapacityUnits: 1
-    }
-  },{
-    TableName : "musictech-signups",
-    KeySchema: [
-      { AttributeName: "signup-id", KeyType: "HASH"}
-    ],
-    AttributeDefinitions: [
-      { AttributeName: "signup-id", AttributeType: "S" }
-    ],
-    ProvisionedThroughput: {
-      ReadCapacityUnits: 1,
-      WriteCapacityUnits: 1
-    }
-  }
+const tables = [
+  "CREATE TABLE sessions (" +
+                          "id INT NOT NULL AUTO_INCREMENT," +
+                          "date DATE NOT NULL," +
+                          "location VARCHAR(50) NOT NULL," +
+                          "PRIMARY KEY(id)" +
+                        ");",
+  "CREATE TABLE signups (" +
+                        "id INT NOT NULL AUTO_INCREMENT," +
+                        "session INT NOT NULL," +
+                        "genre VARCHAR(50) NOT NULL," +
+                        "partner VARCHAR(50) NOT NULL," +
+                        "slot VARCHAR(50) NOT NULL," +
+                        "FOREIGN KEY (session) REFERENCES sessions(id)," +
+                        "PRIMARY KEY(id)" +
+                      ");"
 ];
 
-// Create tables in DB
-tables.forEach(function (table) {
-  dynamodb.createTable(table, function(err, data) {
-    if (err) {
-      console.error("Unable to create table. Error JSON:", JSON.stringify(err, null, 2));
-    } else {
-      console.log("Created table. Table description JSON:", JSON.stringify(data, null, 2));
-      if (table.TableName == "musictech-sessions") {
-        var sampleSession = {
-          TableName: "musictech-sessions",
-          Item:{
-            "name": "session",
-            "session-date": "2018-01-01",
-            "location": "Metric"
-          }
-        };
+connection.connect();
 
-        // Create a session in table
-        docClient.put(sampleSession, function(err, data) {
-          if (err) {
-            console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
-          } else {
-            console.log("Added item:", JSON.stringify(data, null, 2));
-          }
-        });
-      }
-    }
+tables.forEach(function (table) {
+  connection.query(table, function (error) {
+    if (error) throw (error);
   });
-})
+});
+
+const initialData = [
+  "INSERT INTO sessions (date, location) VALUES (CURDATE(), 'Metric');"
+];
+
+initialData.forEach(function (table) {
+  connection.query(table, function (error) {
+    if (error) throw (error);
+  });
+});
+connection.end();

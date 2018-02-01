@@ -1,25 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import AWS from "aws-sdk";
 
 import Separator from "../../components/Separator/Separator.jsx";
 import SessionInfo from "../../components/SessionInfo/SessionInfo.jsx";
 
-if (process.env.NODE_ENV === "production") {
-  // Use AWS
-  AWS.config.update({
-    region: "eu-west-1"
-  });
+let serverHost;
+
+if (process.env.NODE_ENV === "development") {
+  serverHost = "localhost";
 } else {
-  // Use local development version
-  AWS.config.update({
-    region: "us-west-2",
-    endpoint: "http://localhost:8000",
-    credentials: {
-      accessKeyId: "AAAAAAAAAAAAAAAAAAAA",
-      secretAccessKey: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-    }
-  });
+  serverHost = "production-ip";
 }
 
 const Wrapper = styled.div``;
@@ -77,44 +67,27 @@ class Signup extends React.Component {
     this.handleGenreChange = this.handleGenreChange.bind(this);
     this.handlePartnerChange = this.handlePartnerChange.bind(this);
     this.handleSlotChange = this.handleSlotChange.bind(this);
-
-    this.fetchSession();
   }
 
   fetchSession() {
-    // Retrieve latest session from DB
-    const docClient = new AWS.DynamoDB.DocumentClient();
     let component = this;
-
-    var params = {
-      TableName : "musictech-sessions",
-      KeyConditionExpression: "#name = :session",
-      ExpressionAttributeNames:{
-        "#name": "name"
-      },
-      ExpressionAttributeValues: {
-        ":session":"session"
-      },
-      Limit: 1,
-      ScanIndexForward: false
-    };
-
-    docClient.query(params, function(err, data) {
-      if (err) {
-        console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
-        component.setState({
-          location: "Metric",
-          date: "Next Monday"
-        });
-      } else {
-        data.Items.forEach(function(item) {
-          component.setState({
-            location: item["location"],
-            date: item["session-date"],
-          });
-        });
-      }
-    });
+    fetch(`http://${serverHost}:8080/next-session/`)
+    .then(function(data) {
+      return data.json();
+    })
+    .then(function(json) {
+      component.setState({
+        id: json.id,
+        location: json.location,
+        date: json.date
+      });
+    })
+    .catch(function() {
+      component.setState({
+        location: 'Metric',
+        date: '2018-01-01'
+      });
+    })
   }
 
   handleNameChange(e) {
@@ -180,6 +153,11 @@ class Signup extends React.Component {
         });
       }
     });
+    */
+  }
+
+  componentDidMount() {
+    this.fetchSession();
   }
 
   render() {
