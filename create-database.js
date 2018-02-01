@@ -16,6 +16,7 @@ const tables = [
   "CREATE TABLE signups (" +
                         "id INT NOT NULL AUTO_INCREMENT," +
                         "session INT NOT NULL," +
+                        "name VARCHAR(50) NOT NULL," +
                         "genre VARCHAR(50) NOT NULL," +
                         "partner VARCHAR(50) NOT NULL," +
                         "slot VARCHAR(50) NOT NULL," +
