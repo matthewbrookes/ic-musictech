@@ -39,6 +39,27 @@ server.get('/next-session/', function (req, res, next) {
   });
 });
 
+server.post('/add-signup/', function (req, res, next) {
+  const { name, session, genre, partner, slot } = req.body;
+  pool.getConnection(function (err, connection) {
+    if (err === null) {
+      connection.query(`INSERT INTO signups (name, session, genre, partner, slot) VALUES ("${name}", ${session}, "${genre}", "${partner}", "${slot}")`,
+        function (error) {
+          connection.release();
+          if (error) {
+            console.error(error);
+            res.send(500);
+          }
+          res.send();
+        }
+      );
+    } else {
+      res.send(500);
+    }
+  });
+  return next();
+});
+
 server.listen(8080, function () {
   console.log('%s listening at %s', server.name, server.url);
 });
