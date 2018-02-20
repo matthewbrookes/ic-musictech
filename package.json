@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "moment": "^2.20.1",
     "mysql": "^2.15.0",
     "prop-types": "^15.6.0",
     "react": "^16.0.0",

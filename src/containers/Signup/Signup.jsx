@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import moment from "moment";
 
 import Separator from "../../components/Separator/Separator.jsx";
 import SessionInfo from "../../components/SessionInfo/SessionInfo.jsx";
@@ -79,14 +80,14 @@ class Signup extends React.Component {
       component.setState({
         id: json.id,
         location: json.location,
-        date: json.date
+        date: moment(json.date).format('Do MMMM YYYY')
       });
     })
     .catch(function() {
       component.setState({
         id: 1,
         location: 'Metric',
-        date: '2018-01-01'
+        date: moment().format('Do MMMM YYYY')
       });
     })
   }
