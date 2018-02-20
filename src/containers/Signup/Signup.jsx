@@ -117,44 +117,27 @@ class Signup extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const dynamodb = new AWS.DynamoDB();
     let component = this;
-    var params = {
-      Item: {
-        "signup-id": {
-          S: `${this.state.date}:${this.state.name}`
-        },
-        "name": {
-          S: this.state.name,
-        },
-        "session-date": {
-          S: this.state.date,
-        },
-        "genre": {
-          S: this.state.genre,
-        },
-        "partner": {
-          S: this.state.partner || " ",
-        },
-        "slot": {
-          S: this.slots[this.state.slot],
-        }
+    fetch(`http://${serverHost}:8080/add-signup/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
       },
-      ReturnConsumedCapacity: "TOTAL",
-      TableName: "musictech-signups"
-    };
-    dynamodb.putItem(params, function(err) {
-      if (err) {
-        component.setState({
-          error: "Unable to sign up currently",
-        });
+      body: JSON.stringify({
+        name: component.state.name || '',
+        session: component.state.id || 1,
+        genre: component.state.genre || '',
+        partner: component.state.partner || '',
+        slot: component.state.slots[component.slot] || '',
+      })
+    })
+    .then(function(response) {
+      if (response.status >= 200 && response.status < 300) {
+        component.setState({ error: "Success!" })
       } else {
-        component.setState({
-          error: "Successfully signed up",
-        });
+        component.setState({ error: "An error occured" })
       }
-    });
-    */
+    })
   }
 
   componentDidMount() {
