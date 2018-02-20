@@ -84,6 +84,7 @@ class Signup extends React.Component {
     })
     .catch(function() {
       component.setState({
+        id: 1,
         location: 'Metric',
         date: '2018-01-01'
       });
