@@ -1,10 +1,16 @@
-var restify = require('restify');
+var express = require('express');
+var bodyParser = require('body-parser');
 var mysql = require('mysql');
 
-const server = restify.createServer({
-  name: 'musictech-backend',
-  version: '1.0.0'
+const app = express();
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
 });
+
+app.use(bodyParser.json()); // support json encoded bodies
 
 const pool = mysql.createPool({
   connectionLimit: 10,
@@ -14,12 +20,7 @@ const pool = mysql.createPool({
   database : 'musictech'
 });
 
-
-server.use(restify.plugins.acceptParser(server.acceptable));
-server.use(restify.plugins.queryParser());
-server.use(restify.plugins.bodyParser());
-
-server.get('/next-session/', function (req, res, next) {
+app.get('/next-session/', function (req, res) {
   pool.getConnection(function (err, connection) {
     if (err === null) {
       connection.query('SELECT id, date, location FROM sessions ORDER BY id DESC LIMIT 1',
@@ -35,11 +36,10 @@ server.get('/next-session/', function (req, res, next) {
         }
       );
     }
-    return next();
   });
 });
 
-server.post('/add-signup/', function (req, res, next) {
+app.post('/add-signup/', function (req, res) {
   const { name, session, genre, partner, slot } = req.body;
   pool.getConnection(function (err, connection) {
     if (err === null) {
@@ -57,9 +57,8 @@ server.post('/add-signup/', function (req, res, next) {
       res.send(500);
     }
   });
-  return next();
 });
 
-server.listen(8080, function () {
-  console.log('%s listening at %s', server.name, server.url);
+app.listen(8080, function () {
+  console.log('%s listening at 8080', app.name);
 });
