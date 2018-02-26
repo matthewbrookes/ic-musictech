@@ -1,19 +1,19 @@
 [![Build Status](https://travis-ci.org/mbrookes1304/ic-musictech.svg?branch=master)](https://travis-ci.org/mbrookes1304/ic-musictech)
 
 ## Running/Developing locally
-This project contains a `Dockerfile` and `docker-compose.yml` that supports
-hot-reloading of modified source files.
+The entire project can be run using `docker-compose` which will require a `.env` file to be created in the root directory of the project. The `.env` file is used to provide the name and password for connecting to the database.
 
-To use it run `docker-compose up --build`
+The `.env` file requires the following environment variables to be declared
+* `DB_NAME` e.g. `musictech`
+* `DB_PASSWORD` e.g. `pA55w0rd`
 
-This will also create an instance of DynamoDB which needs to be initialised.
+After creating this file bring up the full stack using `docker-compose up --build`
 
-## Initialising the Database
-This website uses an instance of DynamoDB running in `eu-west-1`.
-To initialise the production DB run `NODE_ENV=production node create-database.js`.
+The database will then have to be initialised using the `create-database` script and the environment variables used previous.
 
-To initialise the local DB for development run `NODE_ENV=development node create-database.js`.
-
+```sh
+$ DB_NAME=musictech DB_PASSWORD=pA55w0rd node create-database.js
+```
 # Create React App README
 
 

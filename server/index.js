@@ -16,8 +16,8 @@ const pool = mysql.createPool({
   connectionLimit: 10,
   host     : 'database',
   user     : 'root',
-  password : 'password',
-  database : 'musictech'
+  password : process.env.DB_PASSWORD,
+  database : process.env.DB_NAME
 });
 
 app.get('/next-session/', function (req, res) {
@@ -56,6 +56,7 @@ app.post('/add-signup/', function (req, res) {
                       );
     } else {
       res.send(500);
+      console.error(err)
     }
   });
 });
