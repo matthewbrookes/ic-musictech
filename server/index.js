@@ -43,16 +43,17 @@ app.post('/add-signup/', function (req, res) {
   const { name, session, genre, partner, slot } = req.body;
   pool.getConnection(function (err, connection) {
     if (err === null) {
-      connection.query(`INSERT INTO signups (name, session, genre, partner, slot) VALUES ("${name}", ${session}, "${genre}", "${partner}", "${slot}")`,
-        function (error) {
-          connection.release();
-          if (error) {
-            console.error(error);
-            res.send(500);
-          }
-          res.send();
-        }
-      );
+      connection.query("INSERT INTO signups (name, session, genre, partner, slot) VALUES (?, ?, ?, ?, ?)",
+                       [name, session, genre, partner, slot],
+                       function (error) {
+                         connection.release();
+                         if (error) {
+                           console.error(error);
+                           res.send(500);
+                         }
+                         res.send();
+                       }
+                      );
     } else {
       res.send(500);
     }
