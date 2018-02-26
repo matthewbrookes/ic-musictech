@@ -73,23 +73,23 @@ class Signup extends React.Component {
   fetchSession() {
     let component = this;
     fetch(`http://${serverHost}:8080/next-session/`)
-    .then(function(data) {
-      return data.json();
-    })
-    .then(function(json) {
-      component.setState({
-        id: json.id,
-        location: json.location,
-        date: moment(json.date).format('Do MMMM YYYY')
+      .then(function(data) {
+        return data.json();
+      })
+      .then(function(json) {
+        component.setState({
+          id: json.id,
+          location: json.location,
+          date: moment(json.date).format("Do MMMM YYYY")
+        });
+      })
+      .catch(function() {
+        component.setState({
+          id: 1,
+          location: "Metric",
+          date: moment().format("Do MMMM YYYY")
+        });
       });
-    })
-    .catch(function() {
-      component.setState({
-        id: 1,
-        location: 'Metric',
-        date: moment().format('Do MMMM YYYY')
-      });
-    })
   }
 
   handleNameChange(e) {
@@ -120,25 +120,25 @@ class Signup extends React.Component {
     e.preventDefault();
     let component = this;
     fetch(`http://${serverHost}:8080/add-signup/`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        name: component.state.name || '',
+        name: component.state.name || "",
         session: component.state.id || 1,
-        genre: component.state.genre || '',
-        partner: component.state.partner || '',
-        slot: component.state.slots[component.slot] || '',
+        genre: component.state.genre || "",
+        partner: component.state.partner || "",
+        slot: component.state.slots[component.slot] || "",
       })
     })
-    .then(function(response) {
-      if (response.status >= 200 && response.status < 300) {
-        component.setState({ error: "Success!" })
-      } else {
-        component.setState({ error: "An error occured" })
-      }
-    })
+      .then(function(response) {
+        if (response.status >= 200 && response.status < 300) {
+          component.setState({ error: "Success!" });
+        } else {
+          component.setState({ error: "An error occured" });
+        }
+      });
   }
 
   componentDidMount() {
