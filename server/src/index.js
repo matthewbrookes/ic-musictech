@@ -1,6 +1,6 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var mysql = require('mysql');
+var express = require("express");
+var bodyParser = require("body-parser");
+var mysql = require("mysql");
 
 const app = express();
 
@@ -14,17 +14,17 @@ app.use(bodyParser.json()); // support json encoded bodies
 
 const pool = mysql.createPool({
   connectionLimit: 10,
-  host     : 'database',
-  user     : 'root',
+  host     : "database",
+  user     : "root",
   password : process.env.DB_PASSWORD,
   database : process.env.DB_NAME
 });
 
-app.get('/next-session/', function (req, res) {
+app.get("/next-session/", function (req, res) {
   pool.getConnection(function (err, connection) {
     if (err === null) {
-      connection.query('SELECT id, date, location FROM sessions ORDER BY id DESC LIMIT 1',
-        function (error, results, fields) {
+      connection.query("SELECT id, date, location FROM sessions ORDER BY id DESC LIMIT 1",
+        function (error, results) {
           if (error) throw error;
           connection.release();
           res.header("Access-Control-Allow-Origin", "*");
@@ -39,28 +39,28 @@ app.get('/next-session/', function (req, res) {
   });
 });
 
-app.post('/add-signup/', function (req, res) {
+app.post("/add-signup/", function (req, res) {
   const { name, session, genre, partner, slot } = req.body;
   pool.getConnection(function (err, connection) {
     if (err === null) {
       connection.query("INSERT INTO signups (name, session, genre, partner, slot) VALUES (?, ?, ?, ?, ?)",
-                       [name, session, genre, partner, slot],
-                       function (error) {
-                         connection.release();
-                         if (error) {
-                           console.error(error);
-                           res.send(500);
-                         }
-                         res.send();
-                       }
-                      );
+        [name, session, genre, partner, slot],
+        function (error) {
+          connection.release();
+          if (error) {
+            console.error(error);
+            res.send(500);
+          }
+          res.send();
+        }
+      );
     } else {
       res.send(500);
-      console.error(err)
+      console.error(err);
     }
   });
 });
 
 app.listen(8080, function () {
-  console.log('%s listening at 8080', app.name);
+  console.log("%s listening at 8080", app.name);
 });

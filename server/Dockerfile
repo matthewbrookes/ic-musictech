@@ -8,6 +8,6 @@ WORKDIR /musictech
 
 RUN npm install
 
-COPY index.js /musictech
+COPY src/ /musictech/src
 
-CMD node index.js
+CMD node src/index.js
