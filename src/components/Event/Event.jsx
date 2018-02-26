@@ -2,6 +2,8 @@ import React from "react";
 import MediaQuery from "react-responsive";
 import styled from "styled-components";
 
+import Separator from "../Separator/Separator.jsx";
+
 const EventWrapper = styled.div`
   display: flex;
   padding: 10px;
@@ -13,13 +15,6 @@ const EventTitle = styled.h3`
 
 const EventDate = styled.h5`
   margin: 0px;
-`;
-
-const EventSeparator = styled.div`
-  border-top: black;
-  border-top-style: dotted;
-  width: 75%;
-  margin: 0 auto;
 `;
 
 const DescriptionWrapper = styled.div`
@@ -39,7 +34,7 @@ const Img = styled.img`
 const Event = (event) => {
   return (
     <div>
-      <EventSeparator />
+      <Separator />
       <EventWrapper>
         <MediaQuery query="(min-device-width: 1224px)">
           <Img src={event.event.image} />
@@ -59,6 +54,7 @@ const Event = (event) => {
         </MediaQuery>
       </EventWrapper>
     </div>
-  );};
+  );
+};
 
 export default Event;

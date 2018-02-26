@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Events from "../Events/Events.jsx";
 import Home from "../Home/Home.jsx";
 import Radio from "../Radio/Radio.jsx";
+import Signup from "../Signup/Signup.jsx";
 
 const MainContent = styled.div`
   background-color: #efefef;
@@ -18,6 +19,7 @@ const Main = () => (
       <Route exact path='/' component={Home}/>
       <Route exact path='/events' component={Events}/>
       <Route exact path='/radio' component={Radio}/>
+      <Route exact path='/signup' component={Signup}/>
     </Switch>
   </MainContent>
 );

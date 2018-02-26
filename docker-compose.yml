@@ -7,3 +7,22 @@ services:
     volumes:
       - "./src:/musictech/src"
       - "./public:/musictech/public"
+  database:
+    image: mysql:8
+    ports:
+      - "3306:3306"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+
+  backend:
+    build: server
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+    restart: always
+    environment:
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}

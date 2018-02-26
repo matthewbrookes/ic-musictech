@@ -12,7 +12,7 @@ const Navbar = styled.div`
   align-items: center;
   background-color: #efefef;
   border-radius: 5px;
-  height: 40px;
+  min-height: 40px;
   margin: 0 10%;
 `;
 
@@ -73,6 +73,7 @@ class App extends Component {
                   <StyledLink to='/'>Home</StyledLink>
                   <StyledLink to='/events'>Events</StyledLink>
                   <StyledLink to='/radio'>Musictech on IC Radio</StyledLink>
+                  <StyledLink to='/signup'>Weekly Sessions</StyledLink>
                 </Navbar>
               </header>
               <Main />
