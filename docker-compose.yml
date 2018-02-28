@@ -7,6 +7,8 @@ services:
     volumes:
       - "./src:/musictech/src"
       - "./public:/musictech/public"
+    command: npm run start
+
   database:
     image: mysql:8
     ports:
