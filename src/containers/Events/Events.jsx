@@ -1,39 +1,63 @@
 import React from "react";
 import styled from "styled-components";
+import moment from "moment";
 
 import Event from "../../components/Event/Event.jsx";
 
+let serverHost;
+
+if (process.env.NODE_ENV === "development") {
+  serverHost = "localhost";
+} else {
+  serverHost = "production-ip";
+}
+
 const Header = styled.h2``;
 
-const events = [
-  {
-    "title": "Good Form 009: House\\Techno\\DnB",
-    "description": "Imperial Soundsystem DJs all night long",
-    "date": "17/11/2017",
-    "image": "/images/event-photos/good-form-17-11-17.jpg"
-  },
-  {
-    "title": "BPM: Halloween Special",
-    "description": "Imperial Soundsystem is back with a special Reggaeton & Charts night for Halloween! " +
-                   "Ghouls and ghosts will be out to play on this night, we expect you to wear your best costumes!",
-    "date": "27/10/2017",
-    "image": "/images/event-photos/bpm-halloween.jpg"
-  },
-  {
-    "title": "Beit Me I'm Famous",
-    "description": "For the very first time in the history of FiveSixEight, Metric and the Union Bar, Beit Me I’m Famous will bring to you a party inspired from the best nights in Ibiza." +
-                    "Cocktails all night long, dancers from 23:00 to midnight, courtesy of Culinary and Pole & Aerial societies.",
-    "date": "13/10/2017",
-    "image": "/images/event-photos/bmif.jpg"
+class Events extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      events: [],
+    };
+
+    this.fetchEvents = this.fetchEvents.bind(this);
   }
-];
 
+  fetchEvents() {
+    let component = this;
+    fetch(`http://${serverHost}:8080/events/`)
+      .then(function(data) {
+        return data.json();
+      })
+      .then(function(json) {
+        component.setState({
+          events: json.map((event) => ({
+            id: event.id,
+            title: event.title,
+            date: moment(event.date).format("Do MMMM YYYY"),
+            description: event.description,
+            image: event.image,
+          }))
+        });
+      })
+      .catch(function(err) {
+        console.error(err);
+      });
+  }
 
-const Events = () => (
-  <div>
-    <Header>Our upcoming and recent events</Header>
-    {events.map((event) => <Event event={event} key={event.title}/>)}
-  </div>
-);
+  componentDidMount() {
+    this.fetchEvents();
+  }
+
+  render() {
+    return (
+      <div>
+        <Header>Our upcoming and recent events</Header>
+        {this.state.events.map((event) => <Event event={event} key={event.id}/>)}
+      </div>
+    );
+  }
+}
 
 export default Events;
