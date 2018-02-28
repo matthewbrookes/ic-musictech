@@ -22,6 +22,14 @@ const tables = [
                         "slot VARCHAR(50) NOT NULL," +
                         "FOREIGN KEY (session) REFERENCES sessions(id)," +
                         "PRIMARY KEY(id)" +
+                      ");",
+  "CREATE TABLE events (" +
+                        "id INT NOT NULL AUTO_INCREMENT," +
+                        "date DATE NOT NULL," +
+                        "title VARCHAR(50) NOT NULL," +
+                        "description VARCHAR(200) NOT NULL," +
+                        "image_url VARCHAR(200) NOT NULL," +
+                        "PRIMARY KEY(id)" +
                       ");"
 ];
 
@@ -29,7 +37,7 @@ connection.connect();
 
 tables.forEach(function (table) {
   connection.query(table, function (error) {
-    if (error) throw (error);
+    if (error) console.error(error);
   });
 });
 
@@ -39,7 +47,7 @@ const initialData = [
 
 initialData.forEach(function (table) {
   connection.query(table, function (error) {
-    if (error) throw (error);
+    if (error) console.error(error);
   });
 });
 connection.end();
