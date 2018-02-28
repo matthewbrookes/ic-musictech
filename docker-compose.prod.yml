@@ -1,0 +1,28 @@
+version: '3'
+services:
+  website:
+    image: icmusictech/website
+    ports:
+      - "5000:5000"
+
+  database:
+    image: mysql:8
+    ports:
+      - "3306:3306"
+    restart: always
+    volumes:
+      - "./db:/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+
+  backend:
+    image: icmusictech/server
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+    restart: always
+    environment:
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
