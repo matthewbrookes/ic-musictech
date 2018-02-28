@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import MediaQuery from "react-responsive";
 import styled from "styled-components";
 
@@ -31,30 +32,39 @@ const Img = styled.img`
   margin: 0 auto;
 `;
 
-const Event = (event) => {
+const Event = ({ event }) => {
   return (
     <div>
       <Separator />
       <EventWrapper>
         <MediaQuery query="(min-device-width: 1224px)">
-          <Img src={event.event.image} />
+          <Img src={event.image} />
           <DescriptionWrapper>
-            <EventTitle>{event.event.title}</EventTitle>
-            <EventDate>{event.event.date}</EventDate>
-            <p>{event.event.description}</p>
+            <EventTitle>{event.title}</EventTitle>
+            <EventDate>{event.date}</EventDate>
+            <p>{event.description}</p>
           </DescriptionWrapper>
         </MediaQuery>
         <MediaQuery query="(max-device-width: 1224px)">
           <DescriptionWrapper>
-            {event.event.image && <Img src={event.event.image} />}
-            <EventTitle>{event.event.title}</EventTitle>
-            <EventDate>{event.event.date}</EventDate>
-            <p>{event.event.description}</p>
+            {event.image && <Img src={event.image} />}
+            <EventTitle>{event.title}</EventTitle>
+            <EventDate>{event.date}</EventDate>
+            <p>{event.description}</p>
           </DescriptionWrapper>
         </MediaQuery>
       </EventWrapper>
     </div>
   );
+};
+
+Event.propTypes = {
+  event: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
+  }),
 };
 
 export default Event;
