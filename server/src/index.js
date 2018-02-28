@@ -61,6 +61,27 @@ app.post("/add-signup/", function (req, res) {
   });
 });
 
+app.get("/events/", function (req, res) {
+  pool.getConnection(function (err, connection) {
+    if (err === null) {
+      connection.query("SELECT * FROM events ORDER BY date DESC",
+        function (error, results) {
+          connection.release();
+          if (error) throw error;
+          const jsonArray = results.map((result) => ({
+            "id": result.id,
+            "title": result.title,
+            "date": result.date,
+            "description": result.description,
+            "image": result.image_url,
+          }));
+          res.send(jsonArray);
+        }
+      );
+    }
+  });
+});
+
 app.listen(8080, function () {
   console.log("%s listening at 8080", app.name);
 });
