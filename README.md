@@ -14,6 +14,22 @@ The database will then have to be initialised using the `create-database` script
 ```sh
 $ DB_NAME=musictech DB_PASSWORD=pA55w0rd node create-database.js
 ```
+
+## Running in production
+There is a separate `docker-compose.prod.yml` file to be used when the project is being ran in production.
+
+The following steps need to be followed to run the project:
+* Create the `.env` file following the instructions above
+* Create a directory `db` which will store files for the database (only needs to be done once)
+* Start project with `docker-compose`
+```sh
+$ docker-compose -f docker-compose.prod.yml up --build
+```
+* Using the same credentials as in `.env` file set up the database (only needs to be done once)
+```sh
+$ DB_NAME=musictech DB_PASSWORD=pA55w0rd node create-database.js
+```
+
 # Create React App README
 
 
