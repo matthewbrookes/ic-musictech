@@ -1,17 +1,10 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 import moment from "moment";
 
 import Separator from "../../components/Separator/Separator.jsx";
 import SessionInfo from "../../components/SessionInfo/SessionInfo.jsx";
-
-let serverHost;
-
-if (process.env.NODE_ENV === "development") {
-  serverHost = "localhost";
-} else {
-  serverHost = "production-ip";
-}
 
 const Wrapper = styled.div``;
 
@@ -50,8 +43,9 @@ const Error = styled.div``;
 
 class Signup extends React.Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     this.state = {
       slot: "slot1",
     };
@@ -61,6 +55,11 @@ class Signup extends React.Component {
       slot3: "9pm - 10pm"
     };
 
+    if (process.env.NODE_ENV === "development") {
+      this.serverHost = "localhost";
+    } else {
+      this.serverHost = props.serverHost;
+    }
 
     this.fetchSession = this.fetchSession.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -72,7 +71,7 @@ class Signup extends React.Component {
 
   fetchSession() {
     let component = this;
-    fetch(`http://${serverHost}:8080/next-session/`)
+    fetch(`http://${component.serverHost}:8080/next-session/`)
       .then(function(data) {
         return data.json();
       })
@@ -119,7 +118,7 @@ class Signup extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     let component = this;
-    fetch(`http://${serverHost}:8080/add-signup/`, {
+    fetch(`http://${component.serverHost}:8080/add-signup/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -190,5 +189,9 @@ class Signup extends React.Component {
     );
   }
 }
+
+Signup.propTypes = {
+  serverHost: PropTypes.string.isRequired,
+};
 
 export default Signup;

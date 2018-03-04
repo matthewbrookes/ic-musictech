@@ -1,32 +1,32 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 import moment from "moment";
 
 import Event from "../../components/Event/Event.jsx";
 
-let serverHost;
-
-if (process.env.NODE_ENV === "development") {
-  serverHost = "localhost";
-} else {
-  serverHost = "production-ip";
-}
-
 const Header = styled.h2``;
 
 class Events extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     this.state = {
       events: [],
     };
+
+    if (process.env.NODE_ENV === "development") {
+      this.serverHost = "localhost";
+    } else {
+      this.serverHost = props.serverHost;
+    }
 
     this.fetchEvents = this.fetchEvents.bind(this);
   }
 
   fetchEvents() {
     let component = this;
-    fetch(`http://${serverHost}:8080/events/`)
+    fetch(`http://${component.serverHost}:8080/events/`)
       .then(function(data) {
         return data.json();
       })
@@ -59,5 +59,9 @@ class Events extends React.Component {
     );
   }
 }
+
+Events.propTypes = {
+  serverHost: PropTypes.string.isRequired,
+};
 
 export default Events;

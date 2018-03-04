@@ -1,5 +1,6 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 import Events from "../Events/Events.jsx";
 import Home from "../Home/Home.jsx";
@@ -13,15 +14,19 @@ const MainContent = styled.div`
   border-radius: 4px;
 `;
 
-const Main = () => (
+const Main = ({ serverHost }) => (
   <MainContent>
     <Switch>
       <Route exact path='/' component={Home}/>
-      <Route exact path='/events' component={Events}/>
+      <Route exact path='/events' render={() => <Events serverHost={serverHost} />}/>
       <Route exact path='/radio' component={Radio}/>
-      <Route exact path='/signup' component={Signup}/>
+      <Route exact path='/signup' render={() => <Signup serverHost={serverHost} />}/>
     </Switch>
   </MainContent>
 );
+
+Main.propTypes = {
+  serverHost: PropTypes.string.isRequired,
+};
 
 export default Main;
