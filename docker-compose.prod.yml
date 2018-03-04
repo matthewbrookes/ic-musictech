@@ -1,25 +1,23 @@
 version: '3'
 services:
   website:
-    build: .
+    image: icmusictech/website
     ports:
-      - "3000:3000"
-    volumes:
-      - "./src:/musictech/src"
-      - "./public:/musictech/public"
-    command: npm run start
+      - "5000:5000"
 
   database:
     image: mysql:5
     ports:
       - "3306:3306"
     restart: always
+    volumes:
+      - "./db:/var/lib/mysql"
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_NAME}
 
   backend:
-    build: server
+    image: icmusictech/server
     ports:
       - "8080:8080"
     depends_on:

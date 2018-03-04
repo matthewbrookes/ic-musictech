@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { BrowserRouter, Link } from "react-router-dom";
 import styled from "styled-components";
 import Main from "../Main/Main.jsx";
@@ -76,17 +77,20 @@ class App extends Component {
                   <StyledLink to='/signup'>Weekly Sessions</StyledLink>
                 </Navbar>
               </header>
-              <Main />
+              <Main serverHost={this.props.serverHost} />
             </Center>
             <RightSidebar>
               <Img src="/right-sidebar.jpg" />
             </RightSidebar>
-
           </Wrapper>
         </div>
       </BrowserRouter>
     );
   }
 }
+
+App.propTypes = {
+  serverHost: PropTypes.string.isRequired,
+};
 
 export default App;

@@ -11,4 +11,6 @@ RUN npm install
 COPY src /musictech/src
 COPY public /musictech/public
 
-CMD npm start
+RUN npm run build
+
+CMD node_modules/.bin/serve -s build
