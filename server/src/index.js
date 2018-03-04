@@ -61,6 +61,39 @@ app.post("/add-signup/", function (req, res) {
   });
 });
 
+app.get("/signups/:sessionId", function(req, res) {
+  const { sessionId } = req.params;
+  if (isNaN(sessionId)) {
+    res.status(400).send("sessionId must be a number");
+  } else {
+    pool.getConnection(function (err, connection) {
+      if (err === null) {
+        connection.query("SELECT * FROM signups WHERE session = ?", [sessionId],
+          function (error, results) {
+            connection.release();
+            if (error) {
+              console.console.error(error);
+              res.send(500);
+            } else {
+              const jsonArray = results.map((result) => ({
+                "id": result.id,
+                "name": result.name,
+                "genre": result.genre,
+                "partner": result.partner,
+                "slot": result.slot,
+              }));
+              res.send(jsonArray);
+            }
+          }
+        );
+      } else {
+        console.error(err);
+        res.send(500);
+      }
+    });
+  }
+});
+
 app.get("/events/", function (req, res) {
   pool.getConnection(function (err, connection) {
     if (err === null) {
