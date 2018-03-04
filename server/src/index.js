@@ -35,6 +35,9 @@ app.get("/next-session/", function (req, res) {
           });
         }
       );
+    } else {
+      console.error(err);
+      res.send(500);
     }
   });
 });
@@ -111,6 +114,9 @@ app.get("/events/", function (req, res) {
           res.send(jsonArray);
         }
       );
+    } else {
+      console.error(err);
+      res.send(500);
     }
   });
 });
