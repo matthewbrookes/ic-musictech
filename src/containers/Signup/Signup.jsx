@@ -128,7 +128,7 @@ class Signup extends React.Component {
         session: component.state.id || 1,
         genre: component.state.genre || "",
         partner: component.state.partner || "",
-        slot: component.state.slots[component.slot] || "",
+        slot: component.slots[component.state.slot] || "",
       })
     })
       .then(function(response) {
