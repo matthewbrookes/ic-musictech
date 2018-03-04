@@ -121,6 +121,28 @@ app.get("/events/", function (req, res) {
   });
 });
 
+app.post("/add-event/", function (req, res) {
+  const { title, date, description, image } = req.body;
+  pool.getConnection(function (err, connection) {
+    if (err === null) {
+      connection.query("INSERT INTO events (title, date, description, image_url) VALUES (?, DATE(?), ?, ?)",
+        [title, date, description, image],
+        function (error) {
+          connection.release();
+          if (error) {
+            console.error(error);
+            res.send(500);
+          }
+          res.send();
+        }
+      );
+    } else {
+      res.send(500);
+      console.error(err);
+    }
+  });
+});
+
 app.listen(8080, function () {
   console.log("%s listening at 8080", app.name);
 });
