@@ -143,6 +143,28 @@ app.post("/add-event/", function (req, res) {
   });
 });
 
+app.delete("/events/:eventId", function(req, res) {
+  const { eventId } = req.params;
+  pool.getConnection(function (err, connection) {
+    if (err === null) {
+      connection.query("DELETE FROM events WHERE id = ?",
+        [eventId],
+        function (error) {
+          connection.release();
+          if (error) {
+            console.error(error);
+            res.send(500);
+          }
+          res.send();
+        }
+      );
+    } else {
+      res.send(500);
+      console.error(err);
+    }
+  });
+})
+
 app.listen(8080, function () {
   console.log("%s listening at 8080", app.name);
 });
