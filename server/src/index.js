@@ -40,7 +40,7 @@ app.post("/create-session/", function (req, res) {
       console.error(err);
     }
   });
-})
+});
 
 app.get("/next-session/", function (req, res) {
   pool.getConnection(function (err, connection) {
@@ -185,7 +185,7 @@ app.delete("/events/:eventId", function(req, res) {
       console.error(err);
     }
   });
-})
+});
 
 app.listen(8080, function () {
   console.log("%s listening at 8080", app.name);
