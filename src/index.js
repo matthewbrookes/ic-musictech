@@ -5,6 +5,6 @@ import App from "./containers/App/App.jsx";
 import registerServiceWorker from "./registerServiceWorker";
 
 ReactDOM.render(
-  <App serverHost="server-ip" />
+  <App serverHost="54.154.219.37" />
   , document.getElementById("root"));
 registerServiceWorker();
