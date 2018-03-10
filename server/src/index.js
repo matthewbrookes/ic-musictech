@@ -20,6 +20,28 @@ const pool = mysql.createPool({
   database : process.env.DB_NAME
 });
 
+app.post("/create-session/", function (req, res) {
+  const { date, location } = req.body;
+  pool.getConnection(function (err, connection) {
+    if (err === null) {
+      connection.query("INSERT INTO sessions (location, date) VALUES (?, DATE(?))",
+        [location, date],
+        function (error) {
+          connection.release();
+          if (error) {
+            console.error(error);
+            res.send(500);
+          }
+          res.send();
+        }
+      );
+    } else {
+      res.send(500);
+      console.error(err);
+    }
+  });
+})
+
 app.get("/next-session/", function (req, res) {
   pool.getConnection(function (err, connection) {
     if (err === null) {
