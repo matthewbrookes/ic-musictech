@@ -27,7 +27,7 @@ const tables = [
                         "id INT NOT NULL AUTO_INCREMENT," +
                         "date DATE NOT NULL," +
                         "title VARCHAR(50) NOT NULL," +
-                        "description VARCHAR(200) NOT NULL," +
+                        "description VARCHAR(2000) NOT NULL," +
                         "image_url VARCHAR(200) NOT NULL," +
                         "PRIMARY KEY(id)" +
                       ");"
