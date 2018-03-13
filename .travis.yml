@@ -21,6 +21,7 @@ jobs:
         - npm run lint
     - stage: build
       script:
+        - docker build -t icmusictech/website .
     - script:
         - cd server
         - docker build -t icmusictech/server .
