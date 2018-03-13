@@ -7,6 +7,33 @@ import Event from "../../components/Event/Event.jsx";
 
 const Header = styled.h2``;
 
+const FormWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  max-width: 250px;
+  margin: 0 auto;
+  padding-bottom: 10px;
+`;
+
+const LeftAlignWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+`;
+
+const Label = styled.label`
+  align: left;
+  font-size: 11px;
+  color: #3e3e3e;
+  margin-top: 10px;
+`;
+
+const Input = styled.input`
+  width: 100%;
+`;
+
+const Error = styled.div``;
+
 const EventDeleteButtonWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -26,6 +53,10 @@ class AdminEvents extends React.Component {
 
     this.state = {
       events: [],
+      eventName: "",
+      eventDate: "",
+      eventDescription: "",
+      eventImageUrl: "",
     };
 
     if (process.env.NODE_ENV === "development") {
@@ -36,6 +67,67 @@ class AdminEvents extends React.Component {
 
     this.deleteEvent = this.deleteEvent.bind(this);
     this.fetchEvents = this.fetchEvents.bind(this);
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleDateChange = this.handleDateChange.bind(this);
+    this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
+    this.handleUrlChange = this.handleUrlChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleNameChange(e) {
+    this.setState({
+      eventName: e.target.value,
+    });
+  }
+
+  handleDateChange(e) {
+    this.setState({
+      eventDate: e.target.value,
+    });
+  }
+
+  handleDescriptionChange(e) {
+    this.setState({
+      eventDescription: e.target.value,
+    });
+  }
+
+  handleUrlChange(e) {
+    this.setState({
+      eventImageUrl: e.target.value,
+    });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    const component = this;
+    if (this.state.eventDescription.length > 2000) {
+      this.setState({
+        error: `Description must be less than 2000 characters, currently ${this.state.eventDescription.length} characters`,
+      });
+      return;
+    }
+
+    fetch(`http://${component.serverHost}:8080/add-event/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        title: component.state.eventName,
+        date: component.state.eventDate,
+        description: component.state.eventDescription,
+        image: component.state.eventImageUrl,
+      })
+    })
+      .then(function(response) {
+        if (response.status >= 200 && response.status < 300) {
+          component.setState({ error: "Success!" });
+          component.fetchEvents();
+        } else {
+          component.setState({ error: "An error occured" });
+        }
+      });
   }
 
   deleteEvent(id) {
@@ -77,6 +169,29 @@ class AdminEvents extends React.Component {
     return (
       <div>
         <Header>Add a new event or delete old ones</Header>
+        <FormWrapper>
+          <form onSubmit={this.handleSubmit}>
+            <LeftAlignWrapper>
+              <Label for="eventname">Event Name: </Label>
+            </LeftAlignWrapper>
+            <Input type="text" id="eventname" onChange={this.handleNameChange} required />
+            <LeftAlignWrapper>
+              <Label for="date">Date: </Label>
+            </LeftAlignWrapper>
+            <Input type="text" id="date" onChange={this.handleDateChange} required />
+            <LeftAlignWrapper>
+              <Label for="description">Description: </Label>
+            </LeftAlignWrapper>
+            <Input type="textarea" id="description" onChange={this.handleDescriptionChange} required />
+            <LeftAlignWrapper>
+              <Label for="url">Image url: </Label>
+            </LeftAlignWrapper>
+            <Input type="text" id="url" onChange={this.handleUrlChange} required />
+            <button>Create Event</button>
+            <Error>{this.state.error}</Error>
+          </form>
+        </FormWrapper>
+
         {this.state.events.map((event) => (
           <EventDeleteButtonWrapper key={event.id}>
             <EventWrapper>
