@@ -20,6 +20,28 @@ const pool = mysql.createPool({
   database : process.env.DB_NAME
 });
 
+app.post("/create-session/", function (req, res) {
+  const { date, location } = req.body;
+  pool.getConnection(function (err, connection) {
+    if (err === null) {
+      connection.query("INSERT INTO sessions (location, date) VALUES (?, DATE(?))",
+        [location, date],
+        function (error) {
+          connection.release();
+          if (error) {
+            console.error(error);
+            res.send(500);
+          }
+          res.send();
+        }
+      );
+    } else {
+      res.send(500);
+      console.error(err);
+    }
+  });
+});
+
 app.get("/next-session/", function (req, res) {
   pool.getConnection(function (err, connection) {
     if (err === null) {
@@ -35,6 +57,9 @@ app.get("/next-session/", function (req, res) {
           });
         }
       );
+    } else {
+      console.error(err);
+      res.send(500);
     }
   });
 });
@@ -61,6 +86,39 @@ app.post("/add-signup/", function (req, res) {
   });
 });
 
+app.get("/signups/:sessionId", function(req, res) {
+  const { sessionId } = req.params;
+  if (isNaN(sessionId)) {
+    res.status(400).send("sessionId must be a number");
+  } else {
+    pool.getConnection(function (err, connection) {
+      if (err === null) {
+        connection.query("SELECT * FROM signups WHERE session = ?", [sessionId],
+          function (error, results) {
+            connection.release();
+            if (error) {
+              console.console.error(error);
+              res.send(500);
+            } else {
+              const jsonArray = results.map((result) => ({
+                "id": result.id,
+                "name": result.name,
+                "genre": result.genre,
+                "partner": result.partner,
+                "slot": result.slot,
+              }));
+              res.send(jsonArray);
+            }
+          }
+        );
+      } else {
+        console.error(err);
+        res.send(500);
+      }
+    });
+  }
+});
+
 app.get("/events/", function (req, res) {
   pool.getConnection(function (err, connection) {
     if (err === null) {
@@ -78,6 +136,53 @@ app.get("/events/", function (req, res) {
           res.send(jsonArray);
         }
       );
+    } else {
+      console.error(err);
+      res.send(500);
+    }
+  });
+});
+
+app.post("/add-event/", function (req, res) {
+  const { title, date, description, image } = req.body;
+  pool.getConnection(function (err, connection) {
+    if (err === null) {
+      connection.query("INSERT INTO events (title, date, description, image_url) VALUES (?, DATE(?), ?, ?)",
+        [title, date, description, image],
+        function (error) {
+          connection.release();
+          if (error) {
+            console.error(error);
+            res.send(500);
+          }
+          res.send();
+        }
+      );
+    } else {
+      res.send(500);
+      console.error(err);
+    }
+  });
+});
+
+app.delete("/events/:eventId", function(req, res) {
+  const { eventId } = req.params;
+  pool.getConnection(function (err, connection) {
+    if (err === null) {
+      connection.query("DELETE FROM events WHERE id = ?",
+        [eventId],
+        function (error) {
+          connection.release();
+          if (error) {
+            console.error(error);
+            res.send(500);
+          }
+          res.send();
+        }
+      );
+    } else {
+      res.send(500);
+      console.error(err);
     }
   });
 });
