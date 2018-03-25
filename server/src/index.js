@@ -1,6 +1,8 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var mysql = require("mysql");
+var crypto = require("crypto");
+var AWS = require("aws-sdk");
 
 const app = express();
 
@@ -11,7 +13,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.json({limit: "5mb"})); // support json encoded bodies
 
 const pool = mysql.createPool({
   connectionLimit: 10,
@@ -19,6 +21,10 @@ const pool = mysql.createPool({
   user     : "root",
   password : process.env.DB_PASSWORD,
   database : process.env.DB_NAME
+});
+
+const s3 = new AWS.S3({
+  region: "eu-west-1",
 });
 
 app.post("/create-session/", function (req, res) {
@@ -184,6 +190,27 @@ app.delete("/events/:eventId", function(req, res) {
     } else {
       res.send(500);
       console.error(err);
+    }
+  });
+});
+
+app.post("/upload-image/", function(req, res) {
+  const { data } = req.body;
+  const buf = new Buffer(data.replace(/^data:image\/\w+;base64,/, ""),"base64");
+  const key = `image/${crypto.createHash("sha1").update(data).digest("hex")}`;
+  s3.putObject({
+    ACL: "public-read",
+    Body: buf,
+    Bucket: process.env.AWS_S3_BUCKET_NAME,
+    Key: key,
+  }, function (err) {
+    if (err) {
+      res.send(500);
+      console.error(err);
+    } else {
+      res.send({
+        url: `https://s3.eu-west-1.amazonaws.com/${process.env.AWS_S3_BUCKET_NAME}/${key}`,
+      });
     }
   });
 });
