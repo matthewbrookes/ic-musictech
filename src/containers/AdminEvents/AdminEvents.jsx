@@ -2,6 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import moment from "moment";
+import DatePicker from 'react-datepicker';
+
+import 'react-datepicker/dist/react-datepicker.css';
 
 import Event from "../../components/Event/Event.jsx";
 
@@ -30,6 +33,7 @@ const Label = styled.label`
 
 const Input = styled.input`
   width: 90%;
+  font-size: 16px;
 `;
 
 const Error = styled.div``;
@@ -47,6 +51,14 @@ const ButtonWrapper = styled.div`
   height: 30px;
 `;
 
+const DatePickerWrapper = styled.div`
+  width: 100%;
+`;
+
+const StyledDatePicker = styled(DatePicker)`
+  font-size: 16px;
+`;
+
 class AdminEvents extends React.Component {
   constructor(props) {
     super(props);
@@ -54,7 +66,7 @@ class AdminEvents extends React.Component {
     this.state = {
       events: [],
       eventName: "",
-      eventDate: "",
+      eventDate: moment(),
       eventDescription: "",
       eventImageUrl: "",
     };
@@ -81,9 +93,9 @@ class AdminEvents extends React.Component {
     });
   }
 
-  handleDateChange(e) {
+  handleDateChange(date) {
     this.setState({
-      eventDate: e.target.value,
+      eventDate: date,
     });
   }
 
@@ -148,7 +160,7 @@ class AdminEvents extends React.Component {
       },
       body: JSON.stringify({
         title: component.state.eventName,
-        date: component.state.eventDate,
+        date: component.state.eventDate.format("YYYY-MM-DD"),
         description: component.state.eventDescription,
         image: component.state.eventImageUrl,
       })
@@ -158,7 +170,7 @@ class AdminEvents extends React.Component {
           component.setState({
             error: "Success!",
             eventName: "",
-            eventDate: "",
+            eventDate: moment(),
             eventDescription: "",
             eventImageUrl: "",
           });
@@ -221,15 +233,21 @@ class AdminEvents extends React.Component {
             <LeftAlignWrapper>
               <Label for="eventname">Event Name: </Label>
             </LeftAlignWrapper>
-            <Input type="text" id="eventname" onChange={this.handleNameChange} required />
+            <Input type="text" id="eventname" onChange={this.handleNameChange}/>
             <LeftAlignWrapper>
               <Label for="date">Date: </Label>
             </LeftAlignWrapper>
-            <Input type="text" id="date" onChange={this.handleDateChange} required />
+              <DatePickerWrapper>
+                <StyledDatePicker
+                  selected={this.state.eventDate}
+                  onChange={this.handleDateChange}
+                  dateFormat="DD/MM/YYYY"
+                />
+              </DatePickerWrapper>
             <LeftAlignWrapper>
               <Label for="description">Description: </Label>
             </LeftAlignWrapper>
-            <Input type="textarea" id="description" onChange={this.handleDescriptionChange} required />
+            <Input type="textarea" id="description" onChange={this.handleDescriptionChange}/>
             <LeftAlignWrapper>
               <Label for="image">Upload an image: </Label>
             </LeftAlignWrapper>
@@ -238,7 +256,6 @@ class AdminEvents extends React.Component {
               id="image"
               accept="image/*"
               onChange={this.handleImageChange}
-              required
             />
             <button disabled={!this.isValidForm()}>Create Event</button>
             <Error>{this.state.error}</Error>
