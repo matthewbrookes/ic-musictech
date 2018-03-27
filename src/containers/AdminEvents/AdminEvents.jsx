@@ -70,8 +70,9 @@ class AdminEvents extends React.Component {
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
-    this.handleUrlChange = this.handleUrlChange.bind(this);
+    this.handleImageChange = this.handleImageChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.isValidForm = this.isValidForm.bind(this);
   }
 
   handleNameChange(e) {
@@ -92,10 +93,36 @@ class AdminEvents extends React.Component {
     });
   }
 
-  handleUrlChange(e) {
-    this.setState({
-      eventImageUrl: e.target.value,
-    });
+  handleImageChange(e) {
+    const reader = new FileReader();
+    const file = e.target.files[0];
+    const component = this;
+
+    reader.onload = (upload) => {
+      fetch(`http://${component.serverHost}:8080/upload-image/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name: file.name,
+          type: file.type,
+          data: upload.target.result,
+        })
+      })
+        .then(function(response) {
+          if (response.status >= 200 && response.status < 300) {
+            return response.json();
+          } else {
+            component.setState({ error: "Unable to upload image" });
+          }
+        })
+        .then(function(json) {
+          component.setState({ eventImageUrl: json.url });
+        });
+    };
+
+    reader.readAsDataURL(file);
   }
 
   handleSubmit(e) {
@@ -104,6 +131,12 @@ class AdminEvents extends React.Component {
     if (this.state.eventDescription.length > 2000) {
       this.setState({
         error: `Description must be less than 2000 characters, currently ${this.state.eventDescription.length} characters`,
+      });
+      return;
+    }
+    if (!this.state.eventImageUrl) {
+      this.setState({
+        error: "No image uploaded!",
       });
       return;
     }
@@ -122,7 +155,13 @@ class AdminEvents extends React.Component {
     })
       .then(function(response) {
         if (response.status >= 200 && response.status < 300) {
-          component.setState({ error: "Success!" });
+          component.setState({
+            error: "Success!",
+            eventName: "",
+            eventDate: "",
+            eventDescription: "",
+            eventImageUrl: "",
+          });
           component.fetchEvents();
         } else {
           component.setState({ error: "An error occured" });
@@ -165,6 +204,14 @@ class AdminEvents extends React.Component {
     this.fetchEvents();
   }
 
+  isValidForm() {
+    return (this.state.eventDescription
+             && this.state.eventName
+             && this.state.eventImageUrl
+             && this.state.eventDate
+    );
+  }
+
   render() {
     return (
       <div>
@@ -184,10 +231,16 @@ class AdminEvents extends React.Component {
             </LeftAlignWrapper>
             <Input type="textarea" id="description" onChange={this.handleDescriptionChange} required />
             <LeftAlignWrapper>
-              <Label for="url">Image url: </Label>
+              <Label for="image">Upload an image: </Label>
             </LeftAlignWrapper>
-            <Input type="text" id="url" onChange={this.handleUrlChange} required />
-            <button>Create Event</button>
+            <Input
+              type="file"
+              id="image"
+              accept="image/*"
+              onChange={this.handleImageChange}
+              required
+            />
+            <button disabled={!this.isValidForm()}>Create Event</button>
             <Error>{this.state.error}</Error>
           </form>
         </FormWrapper>
