@@ -174,6 +174,7 @@ class AdminEvents extends React.Component {
             eventDescription: "",
             eventImageUrl: "",
           });
+          document.getElementById("image").value = "";
           component.fetchEvents();
         } else {
           component.setState({ error: "An error occured" });
@@ -233,7 +234,7 @@ class AdminEvents extends React.Component {
             <LeftAlignWrapper>
               <Label for="eventname">Event Name: </Label>
             </LeftAlignWrapper>
-            <Input type="text" id="eventname" onChange={this.handleNameChange}/>
+            <Input type="text" id="eventname" onChange={this.handleNameChange} value={this.state.eventName}/>
             <LeftAlignWrapper>
               <Label for="date">Date: </Label>
             </LeftAlignWrapper>
@@ -247,7 +248,7 @@ class AdminEvents extends React.Component {
             <LeftAlignWrapper>
               <Label for="description">Description: </Label>
             </LeftAlignWrapper>
-            <Input type="textarea" id="description" onChange={this.handleDescriptionChange}/>
+            <Input type="textarea" id="description" onChange={this.handleDescriptionChange} value={this.state.eventDescription}/>
             <LeftAlignWrapper>
               <Label for="image">Upload an image: </Label>
             </LeftAlignWrapper>
