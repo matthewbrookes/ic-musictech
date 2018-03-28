@@ -1,4 +1,6 @@
 [![Build Status](https://travis-ci.org/mbrookes1304/ic-musictech.svg?branch=master)](https://travis-ci.org/mbrookes1304/ic-musictech)
+## Setting up AWS
+User-supplied images are uploaded to an S3 bucket. This should be created along with access keys to store objects there. The name of the bucket along with the access keys are provided as environment variables.
 
 ## Running/Developing locally
 The entire project can be run using `docker-compose` which will require a `.env` file to be created in the root directory of the project. The `.env` file is used to provide the name and password for connecting to the database.
@@ -6,6 +8,9 @@ The entire project can be run using `docker-compose` which will require a `.env`
 The `.env` file requires the following environment variables to be declared
 * `DB_NAME` e.g. `musictech`
 * `DB_PASSWORD` e.g. `pA55w0rd`
+* `AWS_ACCESS_KEY_ID`
+* `AWS_SECRET_ACCESS_KEY`
+* `AWS_S3_BUCKET_NAME`
 
 After creating this file bring up the full stack using `docker-compose up --build`
 
