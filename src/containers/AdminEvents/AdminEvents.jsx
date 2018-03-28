@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import moment from "moment";
-import DatePicker from 'react-datepicker';
+import DatePicker from "react-datepicker";
 
-import 'react-datepicker/dist/react-datepicker.css';
+import "react-datepicker/dist/react-datepicker.css";
 
 import Event from "../../components/Event/Event.jsx";
 
@@ -238,13 +238,13 @@ class AdminEvents extends React.Component {
             <LeftAlignWrapper>
               <Label for="date">Date: </Label>
             </LeftAlignWrapper>
-              <DatePickerWrapper>
-                <StyledDatePicker
-                  selected={this.state.eventDate}
-                  onChange={this.handleDateChange}
-                  dateFormat="DD/MM/YYYY"
-                />
-              </DatePickerWrapper>
+            <DatePickerWrapper>
+              <StyledDatePicker
+                selected={this.state.eventDate}
+                onChange={this.handleDateChange}
+                dateFormat="DD/MM/YYYY"
+              />
+            </DatePickerWrapper>
             <LeftAlignWrapper>
               <Label for="description">Description: </Label>
             </LeftAlignWrapper>
