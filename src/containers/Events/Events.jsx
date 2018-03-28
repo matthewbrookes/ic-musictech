@@ -12,7 +12,7 @@ class Events extends React.Component {
     super(props);
 
     this.state = {
-      events: [],
+      events: []
     };
 
     if (process.env.NODE_ENV === "development") {
@@ -32,12 +32,12 @@ class Events extends React.Component {
       })
       .then(function(json) {
         component.setState({
-          events: json.map((event) => ({
+          events: json.map(event => ({
             id: event.id,
             title: event.title,
             date: moment(event.date).format("Do MMMM YYYY"),
             description: event.description,
-            image: event.image,
+            image: event.image
           }))
         });
       })
@@ -54,14 +54,14 @@ class Events extends React.Component {
     return (
       <div>
         <Header>Our upcoming and recent events</Header>
-        {this.state.events.map((event) => <Event event={event} key={event.id}/>)}
+        {this.state.events.map(event => <Event event={event} key={event.id} />)}
       </div>
     );
   }
 }
 
 Events.propTypes = {
-  serverHost: PropTypes.string.isRequired,
+  serverHost: PropTypes.string.isRequired
 };
 
 export default Events;

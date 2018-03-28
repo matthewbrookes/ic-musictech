@@ -68,7 +68,7 @@ class AdminEvents extends React.Component {
       eventName: "",
       eventDate: moment(),
       eventDescription: "",
-      eventImageUrl: "",
+      eventImageUrl: ""
     };
 
     if (process.env.NODE_ENV === "development") {
@@ -89,19 +89,19 @@ class AdminEvents extends React.Component {
 
   handleNameChange(e) {
     this.setState({
-      eventName: e.target.value,
+      eventName: e.target.value
     });
   }
 
   handleDateChange(date) {
     this.setState({
-      eventDate: date,
+      eventDate: date
     });
   }
 
   handleDescriptionChange(e) {
     this.setState({
-      eventDescription: e.target.value,
+      eventDescription: e.target.value
     });
   }
 
@@ -110,7 +110,7 @@ class AdminEvents extends React.Component {
     const file = e.target.files[0];
     const component = this;
 
-    reader.onload = (upload) => {
+    reader.onload = upload => {
       fetch(`http://${component.serverHost}:8080/upload-image/`, {
         method: "POST",
         headers: {
@@ -119,7 +119,7 @@ class AdminEvents extends React.Component {
         body: JSON.stringify({
           name: file.name,
           type: file.type,
-          data: upload.target.result,
+          data: upload.target.result
         })
       })
         .then(function(response) {
@@ -142,13 +142,15 @@ class AdminEvents extends React.Component {
     const component = this;
     if (this.state.eventDescription.length > 2000) {
       this.setState({
-        error: `Description must be less than 2000 characters, currently ${this.state.eventDescription.length} characters`,
+        error: `Description must be less than 2000 characters, currently ${
+          this.state.eventDescription.length
+        } characters`
       });
       return;
     }
     if (!this.state.eventImageUrl) {
       this.setState({
-        error: "No image uploaded!",
+        error: "No image uploaded!"
       });
       return;
     }
@@ -162,24 +164,23 @@ class AdminEvents extends React.Component {
         title: component.state.eventName,
         date: component.state.eventDate.format("YYYY-MM-DD"),
         description: component.state.eventDescription,
-        image: component.state.eventImageUrl,
+        image: component.state.eventImageUrl
       })
-    })
-      .then(function(response) {
-        if (response.status >= 200 && response.status < 300) {
-          component.setState({
-            error: "Success!",
-            eventName: "",
-            eventDate: moment(),
-            eventDescription: "",
-            eventImageUrl: "",
-          });
-          document.getElementById("image").value = "";
-          component.fetchEvents();
-        } else {
-          component.setState({ error: "An error occured" });
-        }
-      });
+    }).then(function(response) {
+      if (response.status >= 200 && response.status < 300) {
+        component.setState({
+          error: "Success!",
+          eventName: "",
+          eventDate: moment(),
+          eventDescription: "",
+          eventImageUrl: ""
+        });
+        document.getElementById("image").value = "";
+        component.fetchEvents();
+      } else {
+        component.setState({ error: "An error occured" });
+      }
+    });
   }
 
   deleteEvent(id) {
@@ -199,12 +200,12 @@ class AdminEvents extends React.Component {
       })
       .then(function(json) {
         component.setState({
-          events: json.map((event) => ({
+          events: json.map(event => ({
             id: event.id,
             title: event.title,
             date: moment(event.date).format("Do MMMM YYYY"),
             description: event.description,
-            image: event.image,
+            image: event.image
           }))
         });
       })
@@ -218,10 +219,11 @@ class AdminEvents extends React.Component {
   }
 
   isValidForm() {
-    return (this.state.eventDescription
-             && this.state.eventName
-             && this.state.eventImageUrl
-             && this.state.eventDate
+    return (
+      this.state.eventDescription &&
+      this.state.eventName &&
+      this.state.eventImageUrl &&
+      this.state.eventDate
     );
   }
 
@@ -234,7 +236,12 @@ class AdminEvents extends React.Component {
             <LeftAlignWrapper>
               <Label for="eventname">Event Name: </Label>
             </LeftAlignWrapper>
-            <Input type="text" id="eventname" onChange={this.handleNameChange} value={this.state.eventName}/>
+            <Input
+              type="text"
+              id="eventname"
+              onChange={this.handleNameChange}
+              value={this.state.eventName}
+            />
             <LeftAlignWrapper>
               <Label for="date">Date: </Label>
             </LeftAlignWrapper>
@@ -248,7 +255,12 @@ class AdminEvents extends React.Component {
             <LeftAlignWrapper>
               <Label for="description">Description: </Label>
             </LeftAlignWrapper>
-            <Input type="textarea" id="description" onChange={this.handleDescriptionChange} value={this.state.eventDescription}/>
+            <Input
+              type="textarea"
+              id="description"
+              onChange={this.handleDescriptionChange}
+              value={this.state.eventDescription}
+            />
             <LeftAlignWrapper>
               <Label for="image">Upload an image: </Label>
             </LeftAlignWrapper>
@@ -263,10 +275,10 @@ class AdminEvents extends React.Component {
           </form>
         </FormWrapper>
 
-        {this.state.events.map((event) => (
+        {this.state.events.map(event => (
           <EventDeleteButtonWrapper key={event.id}>
             <EventWrapper>
-              <Event event={event}/>
+              <Event event={event} />
             </EventWrapper>
             <ButtonWrapper>
               <button onClick={() => this.deleteEvent(event.id)}>Delete</button>
@@ -279,7 +291,7 @@ class AdminEvents extends React.Component {
 }
 
 AdminEvents.propTypes = {
-  serverHost: PropTypes.string.isRequired,
+  serverHost: PropTypes.string.isRequired
 };
 
 export default AdminEvents;

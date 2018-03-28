@@ -23,7 +23,7 @@ const SessionInfo = ({ date, location }) => {
 
 SessionInfo.propTypes = {
   date: PropTypes.string,
-  location: PropTypes.string,
+  location: PropTypes.string
 };
 
 export default SessionInfo;

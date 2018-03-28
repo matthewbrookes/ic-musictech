@@ -25,7 +25,7 @@ const Wrapper = styled.div`
   display: flex;
   height: 100%;
   width: 100%;
-  position:relative;
+  position: relative;
 `;
 
 const LeftSidebar = styled.div`
@@ -71,10 +71,10 @@ class App extends Component {
               <header className="App-header">
                 <Img src={logo} alt="Logo" />
                 <Navbar>
-                  <StyledLink to='/'>Home</StyledLink>
-                  <StyledLink to='/events'>Events</StyledLink>
-                  <StyledLink to='/radio'>Musictech on IC Radio</StyledLink>
-                  <StyledLink to='/signup'>Weekly Sessions</StyledLink>
+                  <StyledLink to="/">Home</StyledLink>
+                  <StyledLink to="/events">Events</StyledLink>
+                  <StyledLink to="/radio">Musictech on IC Radio</StyledLink>
+                  <StyledLink to="/signup">Weekly Sessions</StyledLink>
                 </Navbar>
               </header>
               <Main serverHost={this.props.serverHost} />
@@ -90,7 +90,7 @@ class App extends Component {
 }
 
 App.propTypes = {
-  serverHost: PropTypes.string.isRequired,
+  serverHost: PropTypes.string.isRequired
 };
 
 export default App;

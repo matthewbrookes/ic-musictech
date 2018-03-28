@@ -42,12 +42,11 @@ const SlotWrapper = styled.div`
 const Error = styled.div``;
 
 class Signup extends React.Component {
-
   constructor(props) {
     super(props);
 
     this.state = {
-      slot: "slot1",
+      slot: "slot1"
     };
     this.slots = {
       slot1: "7pm - 8pm",
@@ -93,25 +92,25 @@ class Signup extends React.Component {
 
   handleNameChange(e) {
     this.setState({
-      name: e.target.value,
+      name: e.target.value
     });
   }
 
   handleGenreChange(e) {
     this.setState({
-      genre: e.target.value,
+      genre: e.target.value
     });
   }
 
   handlePartnerChange(e) {
     this.setState({
-      partner: e.target.value,
+      partner: e.target.value
     });
   }
 
   handleSlotChange(e) {
     this.setState({
-      slot: e.target.value,
+      slot: e.target.value
     });
   }
 
@@ -128,16 +127,15 @@ class Signup extends React.Component {
         session: component.state.id || 1,
         genre: component.state.genre || "",
         partner: component.state.partner || "",
-        slot: component.slots[component.state.slot] || "",
+        slot: component.slots[component.state.slot] || ""
       })
-    })
-      .then(function(response) {
-        if (response.status >= 200 && response.status < 300) {
-          component.setState({ error: "Success!" });
-        } else {
-          component.setState({ error: "An error occured" });
-        }
-      });
+    }).then(function(response) {
+      if (response.status >= 200 && response.status < 300) {
+        component.setState({ error: "Success!" });
+      } else {
+        component.setState({ error: "An error occured" });
+      }
+    });
   }
 
   componentDidMount() {
@@ -147,7 +145,10 @@ class Signup extends React.Component {
   render() {
     return (
       <Wrapper>
-        <p>Join us on Monday from 7-10 for DJ sessions and on Tuesday from 7-10 for Production sessions. Sign up for the next DJ session below.</p>
+        <p>
+          Join us on Monday from 7-10 for DJ sessions and on Tuesday from 7-10
+          for Production sessions. Sign up for the next DJ session below.
+        </p>
         <Separator />
         <SessionInfo date={this.state.date} location={this.state.location} />
         <FormWrapper>
@@ -155,29 +156,61 @@ class Signup extends React.Component {
             <LeftAlignWrapper>
               <Label for="signupname">Name: </Label>
             </LeftAlignWrapper>
-            <Input type="text" id="signupname" onChange={this.handleNameChange} required />
+            <Input
+              type="text"
+              id="signupname"
+              onChange={this.handleNameChange}
+              required
+            />
             <LeftAlignWrapper>
               <Label for="genre">Genre: </Label>
             </LeftAlignWrapper>
-            <Input type="text" id="genre" onChange={this.handleGenreChange} required />
+            <Input
+              type="text"
+              id="genre"
+              onChange={this.handleGenreChange}
+              required
+            />
             <LeftAlignWrapper>
               <Label for="partner">Partner (optional): </Label>
             </LeftAlignWrapper>
-            <Input type="text" id="partner" onChange={this.handlePartnerChange} />
+            <Input
+              type="text"
+              id="partner"
+              onChange={this.handlePartnerChange}
+            />
             <LeftAlignWrapper>
               <Label>Choose a slot:</Label>
             </LeftAlignWrapper>
             <SlotWrapper>
               <LeftAlignWrapper>
-                <input type="radio" id="slot1" value="slot1" onChange={this.handleSlotChange} checked={this.state.slot === "slot1"}/>
+                <input
+                  type="radio"
+                  id="slot1"
+                  value="slot1"
+                  onChange={this.handleSlotChange}
+                  checked={this.state.slot === "slot1"}
+                />
                 <label htmlFor="slot1">{this.slots["slot1"]}</label>
               </LeftAlignWrapper>
               <LeftAlignWrapper>
-                <input type="radio" id="slot2" value="slot2" onChange={this.handleSlotChange} checked={this.state.slot === "slot2"}/>
+                <input
+                  type="radio"
+                  id="slot2"
+                  value="slot2"
+                  onChange={this.handleSlotChange}
+                  checked={this.state.slot === "slot2"}
+                />
                 <label htmlFor="slot2">{this.slots["slot2"]}</label>
               </LeftAlignWrapper>
               <LeftAlignWrapper>
-                <input type="radio" id="slot3" value="slot3" onChange={this.handleSlotChange} checked={this.state.slot === "slot3"}/>
+                <input
+                  type="radio"
+                  id="slot3"
+                  value="slot3"
+                  onChange={this.handleSlotChange}
+                  checked={this.state.slot === "slot3"}
+                />
                 <label htmlFor="slot3">{this.slots["slot3"]}</label>
               </LeftAlignWrapper>
             </SlotWrapper>
@@ -191,7 +224,7 @@ class Signup extends React.Component {
 }
 
 Signup.propTypes = {
-  serverHost: PropTypes.string.isRequired,
+  serverHost: PropTypes.string.isRequired
 };
 
 export default Signup;

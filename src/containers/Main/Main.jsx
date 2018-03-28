@@ -18,17 +18,29 @@ const MainContent = styled.div`
 const Main = ({ serverHost }) => (
   <MainContent>
     <Switch>
-      <Route exact path='/' component={Home}/>
-      <Route exact path='/events' render={() => <Events serverHost={serverHost} />}/>
-      <Route exact path='/radio' component={Radio}/>
-      <Route exact path='/signup' render={() => <Signup serverHost={serverHost} />}/>
-      <Route exact path='/admin/events' render={() => <AdminEvents serverHost={serverHost} />}/>
+      <Route exact path="/" component={Home} />
+      <Route
+        exact
+        path="/events"
+        render={() => <Events serverHost={serverHost} />}
+      />
+      <Route exact path="/radio" component={Radio} />
+      <Route
+        exact
+        path="/signup"
+        render={() => <Signup serverHost={serverHost} />}
+      />
+      <Route
+        exact
+        path="/admin/events"
+        render={() => <AdminEvents serverHost={serverHost} />}
+      />
     </Switch>
   </MainContent>
 );
 
 Main.propTypes = {
-  serverHost: PropTypes.string.isRequired,
+  serverHost: PropTypes.string.isRequired
 };
 
 export default Main;
