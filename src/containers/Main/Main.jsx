@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import AdminEvents from "../AdminEvents/AdminEvents.jsx";
+import AdminSignups from "../AdminSignups/AdminSignups.jsx";
 import Events from "../Events/Events.jsx";
 import Home from "../Home/Home.jsx";
 import Radio from "../Radio/Radio.jsx";
@@ -34,6 +35,11 @@ const Main = ({ serverHost }) => (
         exact
         path="/admin/events"
         render={() => <AdminEvents serverHost={serverHost} />}
+      />
+      <Route
+        exact
+        path="/admin/signups"
+        render={() => <AdminSignups serverHost={serverHost} />}
       />
     </Switch>
   </MainContent>
