@@ -112,7 +112,7 @@ app.get("/signups/:sessionId", function(req, res) {
           function(error, results) {
             connection.release();
             if (error) {
-              console.console.error(error);
+              console.error(error);
               res.send(500);
             } else {
               const jsonArray = results.map(result => ({
